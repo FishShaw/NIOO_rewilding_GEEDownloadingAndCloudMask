@@ -5,6 +5,8 @@
 Transforming decades of satellite data into actionable insights about ecosystem restoration effectiveness in the Gelderse Poort floodplain, Netherlands.
 
 ![Study Area Overview](Docs/Images/study_area.png)
+![Land Cover Classification](Docs/Images/layouot_classification.png)
+![Detailed Classification](Docs/Images/layout_classification_zoomin.png)
 
 ## 🎯 Research Innovation
 
@@ -35,7 +37,6 @@ This interdisciplinary project bridges **Restoration Ecology** and **Geo-Informa
 - **Chronosequence approach**: Four rewilding sites with different establishment years
 - **Multi-scale comparison**: Landscape-wide vs site-specific analysis
 
-![Land Cover Classification](Docs/Images/layouot_classification.png)
 
 ## 🔧 Technical Stack & Workflow
 
@@ -94,8 +95,8 @@ flowchart TD
     L1 --> M2[Seasonal Aggregation]
     L1 --> M3[Annual Growing Season]
     
-    L2 --> N1[Drought Events\n2018 Summer]
-    L2 --> N2[Flood Events\n2018 January]
+    L2 --> N1[Drought Events]
+    L2 --> N2[Flood Events]
     
     M1 & M2 & M3 & N1 & N2 --> O[Data Export]
     
@@ -127,30 +128,6 @@ def _get_seasonal_params(month, max_coverage_mode=False):
 - **Seamless sensor transitions**: Automated detection and processing of optimal satellite data
 - **Standardized band mapping**: Consistent spectral response across Landsat generations
 - **Quality-first approach**: Hierarchical sensor selection (Sentinel-2 → Landsat 8/9 → Landsat 7/5)
-
-### **3. Extreme Event Analysis**
-- **Automated event detection**: Statistical thresholds for drought/flood identification
-- **Temporal window analysis**: Pre/during/post-event NDVI dynamics
-- **Resilience quantification**: Multiple metrics for comprehensive assessment
-
-![Detailed Classification](Docs/Images/layout_classification_zoomin.png)
-
-## 🌍 Real-World Impact
-
-### **For Ecosystem Restoration**
-- Quantify long-term effectiveness of nature-based solutions
-- Guide future rewilding project design and management
-- Evidence-based policy recommendations for floodplain management
-
-### **For Geo-Information Science**
-- Novel framework for resilience assessment using remote sensing
-- Methodological advances in multi-temporal satellite data processing
-- Integration of ecological theory with geospatial analytics
-
-### **For Climate Adaptation**
-- Understanding vegetation response to extreme weather events
-- Assessment of ecosystem service provision under climate change
-- Decision support for nature-based climate adaptation strategies
 
 ## 🛠️ System Requirements & Setup
 
