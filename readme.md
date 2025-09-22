@@ -4,7 +4,11 @@
 
 *This repository contains the **first phase** of my master's internship project: satellite data preprocessing, multi-sensor integration (Landsat/Sentinel-2), and cloud-native processing pipelines for generating 32-year vegetation time series. The second phase (statistical analysis and ecological resilience modeling) can be found [here](https://github.com/FishShaw/NIOO_rewilding_TimeSeriesModellingAndStats).*
 
-Transforming decades of satellite data into actionable insights about ecosystem restoration effectiveness in the Gelderse Poort floodplain, Netherlands.
+---
+
+## ⭕ Intro
+
+The project transforms decades of satellite data into actionable insights about ecosystem restoration effectiveness in the Gelderse Poort floodplain, Netherlands.
 
 ![Study Area Overview](Docs/Images/study_area.png)
 ![Land Cover Classification](Docs/Images/layouot_classification.png)
