@@ -30,7 +30,7 @@ def get_roi_from_shapefile(shapefile_path):
 # --- Landsat Data Processing ---
 
 def _mask_clouds_shadows_landsat(image, relaxed_mode=False):
-    """Internal function: Masks clouds, shadows, and snow in Landsat C2 L2."""
+    """Internal function: Masks clouds, shadows, and snow in Landsat Collection 2 Level 2."""
     qa = image.select('QA_PIXEL')
     
     if relaxed_mode:
@@ -50,7 +50,7 @@ def _mask_clouds_shadows_landsat(image, relaxed_mode=False):
     return image.updateMask(final_mask).copyProperties(image, ['system:time_start'])
 
 def _apply_landsat_scale_factors(image):
-    """Internal function: Applies scaling factors to Landsat C2 L2 SR bands."""
+    """Internal function: Applies scaling factors to Landsat Collection 2 Level 2 Surface Reflectance bands."""
     scale_factor = 0.0000275
     offset = -0.2
     # Select optical bands (starting with SR_B)
@@ -140,8 +140,13 @@ def _process_landsat_collection(collections_to_process, roi, start_date, end_dat
 
 def calculate_landsat_indices(year, roi, month=None, max_coverage_mode=False):
     """
-    Calculates Landsat NDVI and NIRv for a given year/month and ROI (using median composite).
-    Enhanced version: supports adaptive time window and maximum coverage mode
+    Calculates Landsat NDVI and NIRv for a given year/month and ROI using median composite.
+    
+    Features:
+    - Adaptive time window expansion for data-sparse periods
+    - Maximum coverage mode for continuity over quality
+    - Multi-sensor support (Landsat 5/7/8/9)
+    - Intelligent cloud masking strategies
     """
     if roi is None:
         return None
@@ -427,20 +432,23 @@ def calculate_sentinel_indices(year, roi, month=None, max_coverage_mode=False):
 def download_satellite_data(roi, start_year=1993, end_year=2024, parent_folder='GEEpreprocessing', 
                            monthly=False, months=None, max_coverage_mode=False):
     """
-    Downloads yearly (growing season) or monthly satellite data (NDVI/NIRv).
-    Data is exported at 30m resolution in EPSG:28992 CRS.
+    Downloads yearly (growing season) or monthly satellite data (NDVI/NIRv) for the study area.
+    Data is exported at 30m resolution in RD New (EPSG:28992) coordinate system.
     
-    New features:
-    - max_coverage_mode: Enable maximum coverage mode, prioritizing data continuity over quality
+    Key Features:
+    - Multi-sensor integration: Landsat 5/7/8/9 + Sentinel-2
+    - Adaptive quality control: Standard vs maximum coverage modes
+    - Intelligent cloud masking with seasonal parameter adjustment
+    - Comprehensive time series coverage (1993-2024)
 
     Args:
-        roi (ee.Geometry): Region of interest.
-        start_year (int): Start year.
-        end_year (int): End year.
-        parent_folder (str): Base folder for results.
-        monthly (bool): If True, download monthly data.
-        months (list[int], optional): List of months (1-12) for monthly download. Defaults to all 12.
-        max_coverage_mode (bool): If True, use relaxed quality control for maximum data coverage.
+        roi (ee.Geometry): Region of interest geometry.
+        start_year (int): Start year for data acquisition.
+        end_year (int): End year for data acquisition.
+        parent_folder (str): Base directory for exported GeoTIFF files.
+        monthly (bool): If True, download monthly composites; if False, annual growing season.
+        months (list[int], optional): Specific months (1-12) for monthly download. Defaults to all 12.
+        max_coverage_mode (bool): If True, prioritize data continuity over strict quality thresholds.
     """
     if roi is None:
         raise ValueError("Error: ROI must be provided.")
